@@ -1,6 +1,8 @@
 package lab2;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,7 +14,9 @@ public class Main {
             Method[] methods = clazz.getDeclaredMethods();
 
             for (Method method : methods) {
-                if (method.isAnnotationPresent(Repeat.class)) {
+                if (method.isAnnotationPresent(Repeat.class) &&
+                        (Modifier.isPrivate(method.getModifiers()) ||
+                                Modifier.isProtected(method.getModifiers()))) {
                     Repeat repeat = method.getAnnotation(Repeat.class);
                     int times = repeat.value();
 
